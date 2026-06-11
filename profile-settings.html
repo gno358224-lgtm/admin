@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="lo">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ຕັ້ງຄ່າບັນຊີ - HolaEZ Shop</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Lao:wght@300;400;500;600;700;800&family=Kanit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Noto Sans Lao', 'Kanit', sans-serif;
+            background-color: #f8f9fa;
+        }
+
+        button, a, input {
+            -webkit-tap-highlight-color: transparent !important;
+            outline: none !important;
+        }
+        button:focus, a:focus {
+            outline: none !important;
+            box-shadow: none !important;
+        }
+
+        @keyframes slideDown {
+            from { opacity: 0; transform: translateY(-30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        .anim-slide-down { animation: slideDown 0.6s ease-out forwards; }
+        .anim-fade-in { opacity: 0; animation: fadeIn 0.8s ease-out forwards; }
+
+        /* Animation คลื่น */
+        @keyframes waveMove {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-50%); }
+        }
+        
+        .wave-container {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 200%;
+            height: 100%;
+            display: flex;
+        }
+
+        .wave-fast { animation: waveMove 3s linear infinite; }
+        .wave-medium { animation: waveMove 5s linear infinite; }
+        .wave-slow { animation: waveMove 7s linear infinite; }
+
+        /* Preloader */
+        #preloader {
+            position: fixed;
+            inset: 0;
+            z-index: 9999;
+            background-color: #ffffff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: opacity 0.6s ease-out;
+        }
+        .clean-spinner {
+            width: 48px;
+            height: 48px;
+            border: 3px solid #f3e8ff;
+            border-top-color: #a855f7;
+            border-radius: 50%;
+            animation: clean-spin 1s linear infinite;
+        }
+        @keyframes clean-spin {
+            to { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body class="min-h-screen text-gray-800 overflow-x-hidden flex flex-col relative">
+
+    <div id="custom-toast" class="fixed top-5 right-5 z-[200] transform transition-all duration-500 translate-x-[150%] opacity-0 bg-white border-l-4 rounded-xl shadow-[0_10px_40px_rgba(0,0,0,0.1)] p-4 flex items-start gap-3 w-80 pointer-events-none">
+        <div id="toast-icon-container" class="rounded-full p-1 mt-0.5 flex-shrink-0"></div>
+        <div>
+            <h4 id="toast-title" class="font-bold text-[14px] text-gray-800 tracking-tight"></h4>
+            <p id="toast-message" class="text-[13px] text-gray-500 mt-0.5 leading-snug"></p>
+        </div>
+    </div>
+
+    <div class="fixed top-0 left-0 w-full h-[300px] bg-gradient-to-b from-purple-50/50 to-transparent z-[-1] pointer-events-none"></div>
+
+    <div id="preloader">
+        <div class="clean-spinner"></div>
+    </div>
+
+    <!-- ==================== NAVBAR ==================== -->
+    <div class="fixed top-0 left-0 w-full z-50 p-4 bg-transparent anim-slide-down">
+        <nav class="max-w-6xl mx-auto bg-white/95 backdrop-blur-md rounded-[20px] shadow-[0_4px_20px_rgba(168,85,247,0.08)] border border-purple-100 px-6 py-2.5 flex flex-col xl:flex-row justify-between items-center gap-4">
+            
+            <div class="flex items-center flex-shrink-0 pl-1">
+                <a href="index.html" id="site-logo-nav" class="w-12 h-12 rounded-full bg-gradient-to-br from-purple-500 to-indigo-500 flex items-center justify-center text-white text-xs font-bold shadow-[0_4px_12px_rgba(168,85,247,0.3)] transition-transform duration-200 hover:scale-110 active:scale-95 cursor-pointer overflow-hidden">
+                    Logo
+                </a>
+            </div>
+
+            <div class="flex items-center gap-5 pr-1 mx-auto xl:mx-0">
+                <div class="hidden lg:flex items-center gap-6 font-bold text-[14px]">
+                    <a href="index.html" class="flex items-center space-x-1.5 hover:text-purple-600 transition font-semibold hover:scale-105 active:scale-95 duration-200 text-gray-500">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor" class="w-4 h-4"><path stroke-linecap="round" stroke-linejoin="round" d="m2.25 12 8.954-8.955c.44-.439 1.152-.439 1.591 0L21.75 12M4.5 9.75v10.125c0 .621.504 1.125 1.125 1.125H9.75v-4.875c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125V21h4.125c.621 0 1.125-.504 1.125-1.125V9.75M8.25 21h8.25" /></svg>
+                        <span>ໜ້າຫຼັກ</span>
+                    </a>
+                    <a href="category.html" class="flex items-center space-x-1.5 hover:text-purple-600 transition font-semibold hover:scale-105 active:scale-95 duration-200 text-gray-500">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor" class="w-4 h-4"><path stroke-linecap="round" stroke-linejoin="round" d="M13.5 21v-7.5a.75.75 0 0 1 .75-.75h3a.75.75 0 0 1 .75.75V21m-4.5 0H2.36m11.14 0H18m0 0h3.64m-1.39 0V9.349M3.75 21V9.35m0 0a3.001 3.001 0 0 0 3.75-.615A2.999 2.999 0 0 0 9.75 9.75c.896 0 1.7-.393 2.25-1.016a2.999 2.999 0 0 0 2.25 1.016c.896 0 1.7-.393 2.25-1.016a3.001 3.001 0 0 0 3.75.614m-16.5 0a3.004 3.004 0 0 1-.621-4.72l1.4-6.195A1.5 1.5 0 0 1 5.378 3h13.243a1.5 1.5 0 0 1 1.06.44l1.19 1.189a3 3 0 0 1-.621 4.72M6.75 18h3.75a.75.75 0 0 0 .75-.75V13.5a.75.75 0 0 0-.75-.75H6.75a.75.75 0 0 0-.75.75v3.75c0 .415.336.75.75.75Z" /></svg>
+                        <span>ສິນຄ້າທົ່ວໄປ</span>
+                    </a>
+                </div>
+            </div>
+        </nav>
+    </div>
+
+    <!-- ==================== MAIN CONTENT (SETTINGS PAGE) ==================== -->
+    <main class="flex-grow max-w-[600px] mx-auto px-4 pt-[130px] pb-20 w-full flex flex-col relative z-10">
+        
+        <div class="bg-white/95 backdrop-blur-xl border border-purple-100 rounded-[28px] shadow-[0_20px_60px_rgba(168,85,247,0.1)] p-6 md:p-8 relative anim-slide-down overflow-hidden">
+            
+            <!-- ปุ่มย้อนกลับไปหน้า Profile -->
+            <a href="profile.html" class="absolute top-5 left-5 w-8 h-8 flex items-center justify-center rounded-full bg-gray-50 text-gray-400 hover:bg-purple-100 hover:text-purple-600 transition-colors z-20 focus:outline-none">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor" class="w-4 h-4"><path stroke-linecap="round" stroke-linejoin="round" d="M15.75 19.5L8.25 12l7.5-7.5" /></svg>
+            </a>
+
+            <div class="text-center border-b border-purple-50 pb-6 pt-4 mb-6">
+                <h2 class="text-2xl font-black text-gray-800 tracking-tight">ຕັ້ງຄ່າບັນຊີ</h2>
+                <p class="text-[13px] font-medium text-gray-500 mt-1">Profile Settings</p>
+            </div>
+
+            <!-- ฟอร์มเปลี่ยนข้อมูลส่วนตัว -->
+            <form onsubmit="handleUpdateProfile(event)" class="space-y-5">
+                
+                <!-- ข้อมูลปัจจุบัน -->
+                <div class="p-4 bg-purple-50/50 rounded-2xl border border-purple-100 mb-6">
+                    <p class="text-xs text-gray-500 font-bold mb-1">ຊື່ຜູ້ໃຊ້ປັດຈຸບັນ (Username)</p>
+                    <p class="text-base font-black text-purple-700" id="display-username">@user</p>
+                </div>
+
+                <div>
+                    <label class="block text-[13px] font-bold text-gray-700 mb-1.5 ml-1">ອີເມວ (Email)</label>
+                    <input type="email" id="update-email" placeholder="example@mail.com" class="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl text-sm outline-none focus:bg-white focus:ring-2 focus:ring-purple-500/40 focus:border-purple-500 transition-all text-gray-800 font-medium placeholder-gray-400">
+                </div>
+
+                <div class="pt-4 border-t border-gray-100">
+                    <h3 class="text-sm font-bold text-gray-800 mb-4 flex items-center gap-2">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-4 h-4 text-purple-500"><path stroke-linecap="round" stroke-linejoin="round" d="M16.5 10.5V6.75a4.5 4.5 0 10-9 0v3.75m-.75 11.25h10.5a2.25 2.25 0 002.25-2.25v-6.75a2.25 2.25 0 00-2.25-2.25H6.75a2.25 2.25 0 00-2.25 2.25v6.75a2.25 2.25 0 002.25 2.25z" /></svg>
+                        ປ່ຽນລະຫັດຜ່ານ (Change Password)
+                    </h3>
+                    
+                    <div class="space-y-4">
+                        <div>
+                            <label class="block text-[12px] font-bold text-gray-600 mb-1.5 ml-1">ລະຫັດຜ່ານເກົ່າ</label>
+                            <input type="password" id="old-password" placeholder="••••••••" class="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl text-sm outline-none focus:bg-white focus:ring-2 focus:ring-purple-500/40 focus:border-purple-500 transition-all text-gray-800 font-medium">
+                        </div>
+                        <div>
+                            <label class="block text-[12px] font-bold text-gray-600 mb-1.5 ml-1">ລະຫັດຜ່ານໃໝ່</label>
+                            <input type="password" id="new-password" placeholder="••••••••" class="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl text-sm outline-none focus:bg-white focus:ring-2 focus:ring-purple-500/40 focus:border-purple-500 transition-all text-gray-800 font-medium">
+                        </div>
+                        <div>
+                            <label class="block text-[12px] font-bold text-gray-600 mb-1.5 ml-1">ຢືນຢັນລະຫັດຜ່ານໃໝ່</label>
+                            <input type="password" id="confirm-new-password" placeholder="••••••••" class="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl text-sm outline-none focus:bg-white focus:ring-2 focus:ring-purple-500/40 focus:border-purple-500 transition-all text-gray-800 font-medium">
+                        </div>
+                    </div>
+                </div>
+
+                <button type="submit" class="w-full bg-gradient-to-r from-purple-500 to-indigo-500 hover:from-purple-600 hover:to-indigo-600 text-white font-bold py-3.5 rounded-xl transition-all shadow-[0_8px_20px_rgba(168,85,247,0.3)] hover:shadow-[0_10px_25px_rgba(168,85,247,0.4)] active:scale-95 mt-6 text-[14px] focus:outline-none">
+                    ບັນທຶກການປ່ຽນແປງ
+                </button>
+            </form>
+
+        </div>
+    </main>
+
+    <!-- ==================== FOOTER ==================== -->
+    <div class="mt-auto relative z-0">
+        <div class="relative w-full h-16 md:h-24 overflow-hidden -mb-1 z-0">
+            <div class="wave-container wave-slow opacity-30">
+                <svg viewBox="0 0 1440 120" class="w-1/2 h-full" preserveAspectRatio="none"><path fill="#f3e8ff" d="M0,60 C360,120 360,0 720,60 C1080,120 1080,0 1440,60 L1440,120 L0,120 Z"></path></svg>
+                <svg viewBox="0 0 1440 120" class="w-1/2 h-full" preserveAspectRatio="none"><path fill="#f3e8ff" d="M0,60 C360,120 360,0 720,60 C1080,120 1080,0 1440,60 L1440,120 L0,120 Z"></path></svg>
+            </div>
+            <div class="wave-container wave-fast opacity-100">
+                <svg viewBox="0 0 1440 120" class="w-1/2 h-full" preserveAspectRatio="none"><path fill="#ffffff" d="M0,60 C360,120 360,0 720,60 C1080,120 1080,0 1440,60 L1440,120 L0,120 Z"></path></svg>
+                <svg viewBox="0 0 1440 120" class="w-1/2 h-full" preserveAspectRatio="none"><path fill="#ffffff" d="M0,60 C360,120 360,0 720,60 C1080,120 1080,0 1440,60 L1440,120 L0,120 Z"></path></svg>
+            </div>
+        </div>
+        <footer class="bg-white relative z-10 border-t border-purple-50">
+            <div class="bg-purple-50/30">
+                <div class="max-w-6xl mx-auto px-4 py-6 flex flex-col md:flex-row items-center justify-between gap-4 text-xs text-gray-500 font-medium">
+                    <p>© 2026 HolaEZ Shop. All rights reserved.</p>
+                </div>
+            </div>
+        </footer>
+    </div>
+
+    <script>
+        // ================= ระบบ Toast แจ้งเตือนสวยๆ =================
+        function showToast(title, message, type = 'success') {
+            const toast = document.getElementById('custom-toast');
+            const titleEl = document.getElementById('toast-title');
+            const msgEl = document.getElementById('toast-message');
+            const iconContainer = document.getElementById('toast-icon-container');
+
+            titleEl.textContent = title;
+            msgEl.textContent = message;
+
+            if (type === 'success') {
+                toast.className = "fixed top-5 right-5 z-[200] transform transition-all duration-500 translate-x-0 opacity-100 bg-white border-l-4 border-green-500 rounded-xl shadow-[0_10px_40px_rgba(0,0,0,0.1)] p-4 flex items-start gap-3 w-80";
+                iconContainer.innerHTML = `<svg class="w-5 h-5 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"></path></svg>`;
+                iconContainer.className = "rounded-full bg-green-50 p-1 mt-0.5 flex-shrink-0";
+            } else if (type === 'error') {
+                toast.className = "fixed top-5 right-5 z-[200] transform transition-all duration-500 translate-x-0 opacity-100 bg-white border-l-4 border-red-500 rounded-xl shadow-[0_10px_40px_rgba(0,0,0,0.1)] p-4 flex items-start gap-3 w-80";
+                iconContainer.innerHTML = `<svg class="w-5 h-5 text-red-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"></path></svg>`;
+                iconContainer.className = "rounded-full bg-red-50 p-1 mt-0.5 flex-shrink-0";
+            }
+
+            setTimeout(() => {
+                toast.classList.remove('translate-x-0', 'opacity-100');
+                toast.classList.add('translate-x-[150%]', 'opacity-0');
+            }, 3000);
+        }
+
+        window.addEventListener('load', function() {
+            const preloader = document.getElementById('preloader');
+            if (preloader) {
+                preloader.style.opacity = '0';
+                setTimeout(() => { preloader.style.display = 'none'; }, 500);
+            }
+
+            // ดึง Username มาแสดง
+            const username = localStorage.getItem('username');
+            const email = localStorage.getItem('userEmail');
+            
+            if (username) {
+                document.getElementById('display-username').innerText = '@' + username;
+            } else {
+                window.location.href = 'index.html'; // ถ้าไม่ได้ล็อกอิน เด้งกลับหน้าแรก
+            }
+
+            // ถ้าเคยเซฟอีเมลไว้ ให้ดึงมาแสดงในช่อง
+            if (email) {
+                document.getElementById('update-email').value = email;
+            }
+        });
+
+        // ================= จัดการฟอร์มอัปเดตข้อมูล =================
+        function handleUpdateProfile(e) {
+            e.preventDefault();
+
+            const email = document.getElementById('update-email').value;
+            const newPass = document.getElementById('new-password').value;
+            const confirmPass = document.getElementById('confirm-new-password').value;
+
+            // ตรวจสอบรหัสผ่านตรงกันไหม (กรณีที่มีการกรอกรหัสผ่าน)
+            if (newPass !== '' || confirmPass !== '') {
+                if (newPass !== confirmPass) {
+                    showToast('ຂໍ້ຜິດພາດ!', 'ລະຫັດຜ່ານໃໝ່ບໍ່ກົງກັນ ກະລຸນາກວດສອບອີກຄັ້ງ', 'error');
+                    return;
+                }
+            }
+
+            // เซฟอีเมลลง LocalStorage
+            if (email) {
+                localStorage.setItem('userEmail', email);
+            }
+
+            showToast('ສຳເລັດ!', 'ອັບເດດຂໍ້ມູນບັນຊີຮຽບຮ້ອຍແລ້ວ', 'success');
+
+            // ล้างฟอร์มรหัสผ่าน
+            document.getElementById('old-password').value = '';
+            document.getElementById('new-password').value = '';
+            document.getElementById('confirm-new-password').value = '';
+
+            setTimeout(() => {
+                window.location.href = 'profile.html'; // เด้งกลับไปหน้า Profile
+            }, 1500);
+        }
+    </script>
+</body>
+</html>
